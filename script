@@ -1,0 +1,164 @@
+create table HALL (
+Hname VARCHAR2(30),
+Multimedia VARCHAR2(100),
+HallID NUMBER(10),
+Floor NUMBER(5),
+Hwidth NUMBER(5),
+Hheight NUMBER(5),
+Hlength NUMBER(5),
+CONSTRAINT h_key PRIMARY KEY(HallID)
+);
+
+create table SHOWCASE (
+Artifacttype VARCHAR2(30),
+ShowcaseID NUMBER(5),
+HID NUMBER(5),
+Swidth NUMBER(5),
+Sheight NUMBER(5),
+Slength NUMBER(5),
+CONSTRAINT Sh_key PRIMARY KEY (ShowcaseID),
+CONSTRAINT FK_shcase_hall FOREIGN KEY (HID) REFERENCES HALL(HallID)
+);
+
+create table EXCIBITION (
+Title VARCHAR2(30),
+Place VARCHAR2(30),
+Description VARCHAR2(30),
+Cost NUMBER(15),
+Exponses NUMBER(15),
+Tickets NUMBER(15),
+Donations NUMBER(15),
+Fromdate DATE,
+Todate DATE,
+CONSTRAINT Ex_key PRIMARY KEY (Title)
+);
+
+create table ARTIFACT (
+Artname VARCHAR2(50),
+Description VARCHAR2(100),
+Type VARCHAR2(30),
+Title VARCHAR2(30),
+ArtifactID NUMBER(10),
+Artwidth NUMBER(5),
+Artheight NUMBER(5),
+Artlength NUMBER(5),
+ShowcaseID NUMBER(10),
+HID NUMBER(10),
+Creation_year DATE,
+HallDate DATE,
+ExcDate DATE,
+ShowcDate DATE,
+Photo VARCHAR2(50),
+CONSTRAINT Art_key PRIMARY KEY (ArtifactID),
+CONSTRAINT FK_art_excib FOREIGN KEY (Title) REFERENCES EXCIBITION (Title),
+CONSTRAINT FK_art_showc FOREIGN KEY (ShowcaseID) REFERENCES SHOWCASE (ShowcaseID),
+CONSTRAINT FK_art_hall FOREIGN KEY (HID) REFERENCES HALL (HallID)
+); 
+
+create table CREATORS (
+Creators VARCHAR2(100),
+ArtifactID NUMBER(10),
+CONSTRAINT Cr_key PRIMARY KEY (Creators,ArtifactID),
+CONSTRAINT FK_cr_art FOREIGN KEY (ArtifactID) REFERENCES ARTIFACT (ArtifactID)
+);
+
+ALTER SESSION SET NLS_DATE_FORMAT='DD-MM-YYYY';
+
+insert into HALL values('Ancient', 'Artifacts from Ancient Period',1,3,400,250,400);
+insert into HALL values('Roman', 'Artifacts from Roman Period',2,4,550,250,360);
+insert into HALL values('Classic', 'Artifacts from Classic Period',3,1,700,250,500);
+insert into HALL values('Byzantine', 'Artifacts from Byzantine Period',4,2,580,250,800);
+insert into HALL values('Modern', 'Artifacts from Modern Period',5,5,345,250,600);
+
+insert into SHOWCASE values('CASE_1',1,5,59,21,98);
+insert into SHOWCASE values('CASE_2',2,3,45,32,67);
+insert into SHOWCASE values('CASE_3',3,3,35,56,76);
+insert into SHOWCASE values('CASE_4',4,1,32,43,67);
+insert into SHOWCASE values('CASE_5',5,4,55,44,62);
+insert into SHOWCASE values('CASE_6',6,5,23,54,76);
+insert into SHOWCASE values('CASE_7',7,2,54,76,45);
+insert into SHOWCASE values('CASE_8',8,2,53,54,29);
+insert into SHOWCASE values('CASE_9',9,5,120,56,87);
+insert into SHOWCASE values('CASE_10',10,4,56,76,149);
+
+insert into ARTIFACT values('Abdeckung fur Blumenschale','Something','Metalwork',null,1122,4,2,12,6,2,TO_DATE ('1885','YYYY'),'18-03-2017',null,'18-03-2017',null);
+insert into ARTIFACT values('Platte','Something','Metalwork',null,2233,5,7,12,null,4,TO_DATE ('1890','YYYY'),'20-05-2005',null,null,null);
+insert into ARTIFACT values('Kolben','Something','Metalwork',null,3344,12,4,17,null,1,TO_DATE ('1910','YYYY'),'16-07-2013',null,null,null);
+insert into ARTIFACT values('Handleuchter','Something','Furnishings',null,4455,11,34,22,2,5,TO_DATE ('1895','YYYY'),'12-02-2008',null,'11-01-2008',null);
+insert into ARTIFACT values('Schaufel','Something','Metalwork',null,5566,10,3,7,null,2,TO_DATE ('1860','YYYY'),'11-11-2015',null,null,null);
+insert into ARTIFACT values('Vase','Something','Furnishings',null,6677,15,3,2,null,4,TO_DATE ('1630','YYYY'),'15-07-2002',null,null,null);
+insert into ARTIFACT values('Zuckerbehalter','Something','Tableware',null,7788,12,23,10,5,3,TO_DATE ('1766','YYYY'),'12-05-2003',null,'12-04-2003',null);
+insert into ARTIFACT values('Griff','Something','Handles',null,8899,34,9,12,null,5,TO_DATE ('1777','YYYY'),'18-09-2009',null,null,null);
+insert into ARTIFACT values('Turgriff','Something','Metalwork',null,9910,23,21,50,null,1,TO_DATE ('1873','YYYY'),'15-09-2008',null,null,null);
+insert into ARTIFACT values('Einsatz','Something','Stoneware',null,1011,34,12,11,null,3,TO_DATE ('1600','YYYY'),'12-04-2010',null,null,null);
+insert into ARTIFACT values('Cacao-Kanne','Something','Tableware',null,1112,13,23,44,null,2,TO_DATE ('1880','YYYY'),'23-06-2018',null,null,null);
+insert into ARTIFACT values('Leuchter','Something','Furnishings',null,1213,34,54,11,null,5,TO_DATE ('1770','YYYY'),'10-05-2007',null,null,null);
+insert into ARTIFACT values('Becher','Something','Beakers',null,1314,11,34,10,null,3,TO_DATE ('1900','YYYY'),'19-04-2015',null,null,null);
+insert into ARTIFACT values('Wandarm','Something','Wall lamps',null,1415,11,14,42,8,3,TO_DATE ('1916','YYYY'),'05-12-2004',null,'05-12-2004',null);
+insert into ARTIFACT values('Statuette','Something','Figurines',null,1516,23,34,22,null,5,TO_DATE ('1903','YYYY'),'17-12-2007',null,null,null);
+insert into ARTIFACT values('Gefab','Something','Stoneware',null,1617,12,12,34,null,1,TO_DATE ('1800','YYYY'),'18-05-2009',null,null,null);
+insert into ARTIFACT values('Schale','Something','Vessels',null,1718,22,23,33,null,1,TO_DATE ('1766','YYYY'),'19-01-2019',null,null,null);
+insert into ARTIFACT values('Teller','Something','Metalwork',null,1819,34,33,10,10,4,TO_DATE ('1899','YYYY'),'07-03-2008',null,'06-02-2007',null);
+insert into ARTIFACT values('Zierteller','Something','Ìetalwork',null,1920,23,5,12,3,5,TO_DATE ('1660','YYYY'),'09-07-2006',null,'07-07-2006',null);
+insert into ARTIFACT values('Krug','Something','Åwers',null,2021,2,12,31,7,2,TO_DATE ('1762','YYYY'),'07-12-2018',null,'12-11-2017',null);
+insert into ARTIFACT values('Tintenfass','Something','Énkwells',null,2122,23,53,65,10,1,TO_DATE ('1888','YYYY'),'09-02-2001',null,'02-07-1998',null);
+insert into ARTIFACT values('Laterne','Something','Lighting',null,2223,32,43,43,null,2,TO_DATE ('1915','YYYY'),'06-06-1999',null,null,null);
+insert into ARTIFACT values('Gardinenstange','Something','Metalwork',null,2324,65,53,21,4,4,TO_DATE ('1890','YYYY'),'04-02-2013',null,'04-01-2012',null);
+insert into ARTIFACT values('Loffel','Something','Tableware',null,2425,32,12,32,1,2,TO_DATE ('1593','YYYY'),'09-12-2008',null,'04-11-2007',null);
+insert into ARTIFACT values('Brenner einer Petroleumlampe','Something','Lighting devices',null,2526,43,12,22,null,5,TO_DATE ('1798','YYYY'),'02-10-2001',null,null,null);
+insert into ARTIFACT values('Turband','Something','Metalwork',null,2627,32,3,34,null,2,TO_DATE ('1889','YYYY'),'06-03-2005',null,null,null);
+insert into ARTIFACT values('Stander','Something','Furnishings',null,2728,56,65,23,null,1,TO_DATE ('1860','YYYY'),'02-02-2019',null,null,null);
+insert into ARTIFACT values('Hangelampe mit Deckenrosette','Something','Metalwork',null,2829,43,54,65,7,4,TO_DATE ('1793','YYYY'),'03-02-2016',null,'04-05-2015',null);
+insert into ARTIFACT values('Deckelpokal','Something','Goblets',null,2930,32,32,43,4,2,TO_DATE ('1905','YYYY'),'07-09-2012',null,'06-02-2012',null);
+insert into ARTIFACT values('Petschaft','Something','Seals',null,3031,53,123,54,9,3,TO_DATE ('1969','YYYY'),'03-02-2004',null,'01-03-2003',null);
+
+insert into CREATORS values('W.A.S. Benson et Co,Benson, William Arthur Smith',1122);
+insert into CREATORS values('William Arthur Smith',2233);
+insert into CREATORS values('Bromsgrove Guild',3344);
+insert into CREATORS values('The Artificers Guild Ltd',4455);
+insert into CREATORS values('Bromsgrove Guild',5566);
+insert into CREATORS values('Morris,Co',6677);
+insert into CREATORS values('Guild of Handicraft Ashbee, Charles Robert',7788);
+insert into CREATORS values('Rathbone, Richard Llewelyn Benson',8899);
+insert into CREATORS values('Rathbone',9910);
+insert into CREATORS values('William Ault Pottery',1011);
+insert into CREATORS values('W.A.S. Benson et Co,Benson, William Arthur Smith',1112);
+insert into CREATORS values('W.A.S. Benson et Co,Benson, William Arthur Smith',1213);
+insert into CREATORS values('Brateau,Jules-Paul',1314);
+insert into CREATORS values('William Arthur Smith',1415);
+insert into CREATORS values('Maclean, Thomas Nelson Minton',1516);
+insert into CREATORS values('The Foley (Wileman,Co)',1617);
+insert into CREATORS values('William Ault Pottery',1718);
+insert into CREATORS values('W. A. S. Benson et Co,Benson, William Arthur Smith',1819);
+insert into CREATORS values('W. A. S. Benson et Co,Benson, William Arthur Smith',1920);
+insert into CREATORS values('W. A. S. Benson et Co,Benson, William Arthur Smith',2021);
+insert into CREATORS values('Guild of Handicraft',2122);
+insert into CREATORS values('Electrical Fittings',2223);
+insert into CREATORS values('Benson',2324);
+insert into CREATORS values('Liberty,Co',2425);
+insert into CREATORS values('Brooke',2526);
+insert into CREATORS values('Rathbone',2627);
+insert into CREATORS values('Faraday,Son Ltd.',2728);
+insert into CREATORS values('W. A. S. Benson et Co,Benson, William Arthur Smith',2829);
+insert into CREATORS values('Guild of Handicraft, Ashbee, Charles Robert',2930);
+insert into CREATORS values('Liberty,Co',3031);
+
+insert into EXCIBITION values('ART NOUVEAU','Paris,France','A Universal Style',1500000,900000,200000,800000,'06-06-2019','12-06-2019');
+
+update ARTIFACT set Title='ART NOUVEAU' where ArtifactID=1213;
+update ARTIFACT set Title='ART NOUVEAU' where ArtifactID=1617;
+update ARTIFACT set Title='ART NOUVEAU' where ArtifactID=2021;
+update ARTIFACT set Title='ART NOUVEAU' where ArtifactID=2627;
+update ARTIFACT set Title='ART NOUVEAU' where ArtifactID=2930;
+
+update ARTIFACT set ExcDate='06-06-2019' where ArtifactID=1213;
+update ARTIFACT set ExcDate='06-06-2019' where ArtifactID=1617;
+update ARTIFACT set ExcDate='06-06-2019' where ArtifactID=2021;
+update ARTIFACT set ExcDate='06-06-2019' where ArtifactID=2627;
+update ARTIFACT set ExcDate='06-06-2019' where ArtifactID=2930;
+
+drop table CREATORS;
+drop table ARTIFACT;
+drop table EXCIBITION;
+drop table SHOWCASE;
+drop table HALL;
